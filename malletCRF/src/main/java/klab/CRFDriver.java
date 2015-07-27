@@ -295,12 +295,13 @@ public class CRFDriver
      * @param var Gaussian prior variance
      * @return the trained model
      */
-    public static CRF train(InstanceList training, InstanceList testing,
+    public static CRF train(InstanceList training, InstanceList testing, InstanceList validate,
                             TransducerEvaluator[] eval, int[] orders,
                             String defaultLabel,
                             String forbidden, String allowed,
                             boolean connected, int iterations, double var, CRF crf)
     {
+
         Pattern forbiddenPat = Pattern.compile(forbidden);
         Pattern allowedPat = Pattern.compile(allowed);
         if (crf == null) {
@@ -314,6 +315,7 @@ public class CRFDriver
             crf.getState(startName).setInitialWeight(0.0);
         }
         logger.info("Training on " + training.size() + " instances");
+        logger.info("Validation set: " + validate.size() + " instances");
         if (testing != null)
             logger.info("Testing on " + testing.size() + " instances");
 
@@ -348,11 +350,12 @@ public class CRFDriver
                     for (int q = 0; q < eval.length; q++)
                         eval[q].evaluate(crft);
                     if (viterbiOutputOption.value && i % 10 == 0)
-                        new ViterbiWriter("", new InstanceList[] {training, testing}, new String[] {"training", "testing"}).evaluate(crft);
+                        new ViterbiWriter("", new InstanceList[] {training, testing}, new String[] {"training", "testing", "validation"}).evaluate(crft);
                     if (converged)
                         break;
                 }
                 eval[eval.length - 1].evaluateInstanceList(crft, training, "Training");
+                eval[eval.length - 1].evaluateInstanceList(crft, validate, "Validation");
                 eval[eval.length - 1].evaluateInstanceList(crft, testing, "Testing");
             }
             crft.shutdown();
@@ -499,7 +502,7 @@ public class CRFDriver
     public static void main (String[] args) throws Exception
     {
         Reader trainingFile = null, testFile = null;
-        InstanceList trainingData = null, testData = null;
+        InstanceList trainingData = null, testData = null, validateData = null;
         int numEvaluations = 0;
         int iterationsBetweenEvals = 16;
         int restArgs = commandOptions.processOptions(args);
@@ -559,10 +562,12 @@ public class CRFDriver
                     Random r = new Random (randomSeedOption.value);
                     InstanceList[] trainingLists =
                             trainingData.split(
-                                    r, new double[] {trainingFractionOption.value,
-                                            1-trainingFractionOption.value});
+                                    //r, new double[] {trainingFractionOption.value,
+                                    //        1-trainingFractionOption.value});
+                                    r, new double[] {0.60, 0.20, 0.20});
                     trainingData = trainingLists[0];
                     testData = trainingLists[1];
+                    validateData = trainingLists[2];
                 }
             }
         } else if (testOption.value != null)
@@ -586,8 +591,8 @@ public class CRFDriver
         if (testOption.value != null)
         {
             if (testOption.value.startsWith("lab")) {
-                eval[0] = new TokenAccuracyEvaluator(new InstanceList[] {trainingData, testData}, new String[] {"Training", "Testing"});
-                eval[1] = new PerClassAccuracyEvaluator(new InstanceList[]{trainingData, testData}, new String[]{"Training", "Testing"});
+                eval[0] = new TokenAccuracyEvaluator(new InstanceList[] {trainingData, testData, validateData}, new String[] {"Training", "Testing", "Validation"});
+                eval[1] = new PerClassAccuracyEvaluator(new InstanceList[]{trainingData, testData, validateData}, new String[]{"Training", "Testing", "Validation"});
                 eval[2] = new InstanceAccuracyEvaluator();
 
             }else if (testOption.value.startsWith("seg="))
@@ -638,11 +643,20 @@ public class CRFDriver
         }
         if (trainOption.value)
         {
-            crf = train(trainingData, testData, eval,
-                    ordersOption.value, defaultOption.value,
-                    forbiddenOption.value, allowedOption.value,
-                    connectedOption.value, iterationsOption.value,
-                    gaussianVarianceOption.value, crf);
+            for (int i = 1; i < trainingData.size(); i+=5) {
+                crf = null;
+                InstanceList trainingDataCp = trainingData.subList(0, i);
+                eval[0] = new TokenAccuracyEvaluator(new InstanceList[] {trainingDataCp, testData, validateData}, new String[] {"Training", "Testing", "Validation"});
+                eval[1] = new PerClassAccuracyEvaluator(new InstanceList[]{trainingDataCp, testData, validateData}, new String[]{"Training", "Testing", "Validation"});
+                eval[2] = new InstanceAccuracyEvaluator();
+
+
+                crf = train(trainingDataCp, testData, validateData, eval,
+                        ordersOption.value, defaultOption.value,
+                        forbiddenOption.value, allowedOption.value,
+                        connectedOption.value, iterationsOption.value,
+                        gaussianVarianceOption.value, crf);
+            }
             if (modelOption.value != null)
             {
                 ObjectOutputStream s =
