@@ -350,7 +350,7 @@ public class CRFDriver
                     for (int q = 0; q < eval.length; q++)
                         eval[q].evaluate(crft);
                     if (viterbiOutputOption.value && i % 10 == 0)
-                        new ViterbiWriter("", new InstanceList[] {training, testing}, new String[] {"training", "testing", "validation"}).evaluate(crft);
+                        new ViterbiWriter("", new InstanceList[] {training, testing, validate}, new String[] {"training", "testing", "validation"}).evaluate(crft);
                     if (converged)
                         break;
                 }
@@ -394,6 +394,8 @@ public class CRFDriver
                     if (converged)
                         break;
                 }
+                for (int q = 0; q < eval.length; q++)
+                    eval[q].evaluate(crft);
                 eval[eval.length -1].evaluateInstanceList(crft, training, "Training");
                 eval[eval.length -1].evaluateInstanceList(crft, testing, "Testing");
             }
@@ -553,6 +555,11 @@ public class CRFDriver
             {
                 if (testFile != null)
                 {
+                    Random r = new Random (randomSeedOption.value);
+                    InstanceList[] trainingLists =
+                            trainingData.split( r, new double[] {0.80, 0.20});
+                    trainingData = trainingLists[0];
+                    validateData = trainingLists[1];
                     testData = new InstanceList(p);
                     testData.addThruPipe(
                             new LineGroupIterator(testFile,
@@ -643,7 +650,7 @@ public class CRFDriver
         }
         if (trainOption.value)
         {
-            for (int i = 1; i < trainingData.size(); i+=5) {
+            for (int i = 1; i < trainingData.size(); i+=500) {
                 crf = null;
                 InstanceList trainingDataCp = trainingData.subList(0, i);
                 eval[0] = new TokenAccuracyEvaluator(new InstanceList[] {trainingDataCp, testData, validateData}, new String[] {"Training", "Testing", "Validation"});
