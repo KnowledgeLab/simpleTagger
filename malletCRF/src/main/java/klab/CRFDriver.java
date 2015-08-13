@@ -21,6 +21,9 @@ import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import cc.mallet.fst.*;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.tsf.OffsetConjunctions;
+import cc.mallet.pipe.tsf.TokenTextCharSuffix;
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.AugmentableFeatureVector;
 import cc.mallet.types.FeatureVector;
@@ -249,6 +252,11 @@ public class CRFDriver
             SimpleTagger.class, "threads", "INTEGER", true, 1,
             "Number of threads to use for CRF training.", null);
 
+    private static final CommandOption.String featureString = new CommandOption.String(
+            SimpleTagger.class, "feature-string", "STRING", true, "156",
+            "Specifies which features to look for in the input data", null);
+
+
     private static final CommandOption.List commandOptions =
             new CommandOption.List (
                     "Training, testing and running a generic tagger.",
@@ -272,7 +280,8 @@ public class CRFDriver
                             cacheSizeOption,
                             includeInputOption,
                             featureInductionOption,
-                            numThreads
+                            numThreads,
+                            featureString
                     });
 
     /**
@@ -316,8 +325,8 @@ public class CRFDriver
         }
         logger.info("Training on " + training.size() + " instances");
         logger.info("Validation set: " + validate.size() + " instances");
-        if (testing != null)
-            logger.info("Testing on " + testing.size() + " instances");
+        //if (testing != null)
+        //    logger.info("Testing on " + testing.size() + " instances");
 
         assert(numThreads.value > 0);
         if (numThreads.value > 1) {
@@ -347,8 +356,8 @@ public class CRFDriver
                 for (int i = 1; i <= iterations; i++) {
                     converged = crft.train (training, 1);
                     if (i % 25 == 0 && eval != null) // Change the 1 to higher integer to evaluate less often
-                    for (int q = 0; q < eval.length; q++)
-                        eval[q].evaluate(crft);
+                    //for (int q = 0; q < eval.length; q++)
+                    //    eval[q].evaluate(crft);
                     if (viterbiOutputOption.value && i % 10 == 0)
                         new ViterbiWriter("", new InstanceList[] {training, testing, validate}, new String[] {"training", "testing", "validation"}).evaluate(crft);
                     if (converged)
@@ -356,7 +365,7 @@ public class CRFDriver
                 }
                 eval[eval.length - 1].evaluateInstanceList(crft, training, "Training");
                 eval[eval.length - 1].evaluateInstanceList(crft, validate, "Validation");
-                eval[eval.length - 1].evaluateInstanceList(crft, testing, "Testing");
+                //eval[eval.length - 1].evaluateInstanceList(crft, testing, "Testing");
             }
             crft.shutdown();
         }
@@ -447,6 +456,8 @@ public class CRFDriver
         return answers;
     }
 
+
+
     /**
      * Command-line wrapper to train, test, or run a generic CRF-based tagger.
      *
@@ -515,6 +526,7 @@ public class CRFDriver
         }
         if (trainOption.value)
         {
+
             trainingFile = new FileReader(new File(args[restArgs]));
             if (testOption.value != null && restArgs < args.length - 1)
                 testFile = new FileReader(new File(args[restArgs+1]));
@@ -522,6 +534,7 @@ public class CRFDriver
             testFile = new FileReader(new File(args[restArgs]));
 
         Pipe p = null;
+        Pipe test_p = null;
         CRF crf = null;
         TransducerEvaluator[] eval = new TransducerEvaluator[3];
         if (continueTrainingOption.value || !trainOption.value) {
@@ -537,8 +550,60 @@ public class CRFDriver
             p = crf.getInputPipe();
         }
         else {
-            p = new SimpleTaggerSentence2FeatureVectorSequence();
+            ArrayList<Pipe> trainPipes = new ArrayList<Pipe>();
+            ArrayList<Pipe> testPipes = new ArrayList<Pipe>();
+            //TODO: Go through featureString and parse arguments, adding pipes as needed
+
+            String strFeatureSet = featureString.value;
+            for (int i = 0; i < featureString.value.length(); i++ )
+            {
+                if (strFeatureSet.charAt(i) == '5')
+                {
+                    trainPipes.add(new TokenTextCharSuffix("POS=", 2));
+                    testPipes.add(new TokenTextCharSuffix("POS=", 2));
+                }
+
+                if (strFeatureSet.charAt(i) == '6')
+                {
+                    int[] conj = {-1, 0, 1};
+                    trainPipes.add(new OffsetConjunctions(new int[][]{conj}));
+                    testPipes.add(new OffsetConjunctions(new int[][]{conj}));
+                }
+
+                if (strFeatureSet.charAt(i) == '7')
+                {
+                    trainPipes.add(new TokenTextCharSuffix("NUM=", 2));
+                    testPipes.add(new TokenTextCharSuffix("NUM=", 2));
+                }
+
+                if (strFeatureSet.charAt(i) == '8')
+                {
+                    trainPipes.add(new TokenTextCharSuffix("VERB_PRE=", 2) );
+                    testPipes.add(new TokenTextCharSuffix("VERB_PRE=", 2) );
+                    trainPipes.add(new TokenTextCharSuffix("VERB_PAS=", 2));
+                    testPipes.add(new TokenTextCharSuffix("VERB_PAS=", 2));
+                }
+
+            }
+
+            trainPipes.add(new SimpleTaggerSentence2FeatureVectorSequence());
+            testPipes.add(new SimpleTaggerSentence2FeatureVectorSequence());
+            //new OffsetConjunctions({{-1,0,1}});
+            //new TokenTextCharSuffix("POS=", 2);
+            //new TokenTextCharSuffix("NUM=", 2);
+            //new TokenTextCharSuffix("VERB_PRE=", 2);
+            //new TokenTextCharSuffix("VERB_PAS=", 2);
+
+
+            p = new SerialPipes(trainPipes);
+            //p = new SimpleTaggerSentence2FeatureVectorSequence();
             p.getTargetAlphabet().lookupIndex(defaultOption.value);
+
+
+            test_p = new SerialPipes(testPipes);
+            //test_p = new SimpleTaggerSentence2FeatureVectorSequence();
+            test_p.getTargetAlphabet().lookupIndex(defaultOption.value);
+
         }
 
 
@@ -560,10 +625,26 @@ public class CRFDriver
                             trainingData.split( r, new double[] {0.80, 0.20});
                     trainingData = trainingLists[0];
                     validateData = trainingLists[1];
-                    testData = new InstanceList(p);
+                    testData = new InstanceList(test_p);
+
+                    System.out.println("LABELS BEFORE ADDING TEST DATA");
+                    Alphabet targets = p.getTargetAlphabet();
+                    StringBuffer buf = new StringBuffer("Labels:");
+                    for (int i = 0; i < targets.size(); i++)
+                        buf.append(" ").append(targets.lookupObject(i).toString());
+                    logger.info(buf.toString());
+
                     testData.addThruPipe(
                             new LineGroupIterator(testFile,
                                     Pattern.compile("^\\s*$"), true));
+
+                    System.out.println("LABELS AFTER ADDING TEST DATA");
+                    targets = p.getTargetAlphabet();
+                    buf = new StringBuffer("Labels:");
+                    for (int i = 0; i < targets.size(); i++)
+                        buf.append(" ").append(targets.lookupObject(i).toString());
+                    logger.info(buf.toString());
+
                 } else
                 {
                     Random r = new Random (randomSeedOption.value);
@@ -653,8 +734,8 @@ public class CRFDriver
             for (int i = 1; i < trainingData.size(); i+=500) {
                 crf = null;
                 InstanceList trainingDataCp = trainingData.subList(0, i);
-                eval[0] = new TokenAccuracyEvaluator(new InstanceList[] {trainingDataCp, testData, validateData}, new String[] {"Training", "Testing", "Validation"});
-                eval[1] = new PerClassAccuracyEvaluator(new InstanceList[]{trainingDataCp, testData, validateData}, new String[]{"Training", "Testing", "Validation"});
+                eval[0] = new TokenAccuracyEvaluator(new InstanceList[] {trainingDataCp, validateData}, new String[] {"Training", "Validation"});
+                eval[1] = new PerClassAccuracyEvaluator(new InstanceList[]{trainingDataCp, validateData}, new String[]{"Training", "Validation"});
                 eval[2] = new InstanceAccuracyEvaluator();
 
 
@@ -663,6 +744,39 @@ public class CRFDriver
                         forbiddenOption.value, allowedOption.value,
                         connectedOption.value, iterationsOption.value,
                         gaussianVarianceOption.value, crf);
+
+                boolean includeInput = includeInputOption.value();
+                includeInput = true;
+                System.out.println("---i = " + i + " ----");
+                for (int l = 0; l< testData.size(); l++)
+                {
+                    Sequence input = (Sequence)testData.get(l).getData();
+                    Sequence[] outputs = apply(crf, input, nBestOption.value);
+                    int k = outputs.length;
+                    boolean error = false;
+                    for (int a = 0; a < k; a++) {
+                        if (outputs[a].size() != input.size()) {
+                            logger.info("Failed to decode input sequence " + l + ", answer " + a);
+                            error = true;
+                        }
+                    }
+                    if (!error) {
+                        for (int j = 0; j < input.size(); j++)
+                        {
+                            StringBuffer buf = new StringBuffer();
+                            for (int a = 0; a < k; a++)
+                                buf.append(outputs[a].get(j).toString()).append(" ");
+                            if (includeInput) {
+                                FeatureVector fv = (FeatureVector)input.get(j);
+                                buf.append(fv.toString(true));
+                            }
+                            System.out.println(buf.toString());
+                        }
+                        System.out.println("");
+                    }
+                }
+                System.out.println("PREDICTIONS DONE");
+
             }
             if (modelOption.value != null)
             {
