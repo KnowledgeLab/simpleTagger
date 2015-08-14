@@ -639,11 +639,13 @@ public class CRFDriver
                         buf.append(" ").append(targets.lookupObject(i).toString());
                     logger.info(buf.toString());
 
+                    p.setTargetProcessing(false);
                     testData.addThruPipe(
                             new LineGroupIterator(testFile,
                                     Pattern.compile("^\\s*$"), true));
 
                     System.out.println("LABELS AFTER ADDING TEST DATA");
+                    p.setTargetProcessing(true);
                     targets = p.getTargetAlphabet();
                     buf = new StringBuffer("Labels:");
                     for (int i = 0; i < targets.size(); i++)

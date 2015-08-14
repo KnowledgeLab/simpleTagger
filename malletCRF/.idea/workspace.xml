@@ -26,11 +26,24 @@
       <file leaf-file-name="CRFDriver.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/klab/CRFDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.1938777">
-              <caret line="608" column="67" selection-start-line="608" selection-start-column="67" selection-end-line="608" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.49708456">
+              <caret line="828" column="25" selection-start-line="828" selection-start-column="25" selection-end-line="828" selection-end-column="25" />
               <folding>
-                <element signature="e#0#39486#0" expanded="true" />
+                <element signature="e#0#39585#0" expanded="true" />
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Pipe.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/pipe/Pipe.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
+              <folding>
+                <element signature="e#7566#7567#0" expanded="true" />
+                <element signature="e#7615#7616#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -40,7 +53,7 @@
         <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/CRFTrainerByLabelLikelihood.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="277" column="43" selection-start-line="277" selection-start-column="43" selection-end-line="277" selection-end-column="43" />
+              <caret line="204" column="19" selection-start-line="204" selection-start-column="19" selection-end-line="204" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -117,73 +130,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CRFOptimizableByBatchLabelLikelihood.java" pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/CRFOptimizableByBatchLabelLikelihood.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="227" column="31" selection-start-line="227" selection-start-column="31" selection-end-line="227" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#9830#9831#0" expanded="false" />
-                <element signature="e#9873#9874#0" expanded="false" />
-                <element signature="e#9916#9917#0" expanded="false" />
-                <element signature="e#9964#9965#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CRF.java" pinned="false" current-in-tab="false">
         <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/CRF.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="257" column="22" selection-start-line="257" selection-start-column="22" selection-end-line="257" selection-end-column="22" />
-              <folding>
-                <element signature="e#0#76580#0" expanded="false" />
-                <element signature="imports" expanded="false" />
-                <element signature="e#10572#10573#0" expanded="false" />
-                <element signature="e#10613#10614#0" expanded="false" />
-                <element signature="e#16204#16205#0" expanded="false" />
-                <element signature="e#16250#16251#0" expanded="false" />
-                <element signature="e#16323#16324#0" expanded="false" />
-                <element signature="e#16371#16372#0" expanded="false" />
-                <element signature="e#17868#17869#0" expanded="false" />
-                <element signature="e#17917#17918#0" expanded="false" />
-                <element signature="e#24910#24911#0" expanded="false" />
-                <element signature="e#24942#24943#0" expanded="false" />
-                <element signature="e#28243#28244#0" expanded="false" />
-                <element signature="e#28275#28276#0" expanded="false" />
-                <element signature="e#28963#28964#0" expanded="false" />
-                <element signature="e#29015#29016#0" expanded="false" />
-                <element signature="e#45297#45298#0" expanded="false" />
-                <element signature="e#45331#45332#0" expanded="false" />
-                <element signature="e#45987#45988#0" expanded="false" />
-                <element signature="e#46049#46050#0" expanded="false" />
-                <element signature="e#46103#46104#0" expanded="false" />
-                <element signature="e#46148#46149#0" expanded="false" />
-                <element signature="e#46189#46190#0" expanded="false" />
-                <element signature="e#46228#46229#0" expanded="false" />
-                <element signature="e#46268#46269#0" expanded="false" />
-                <element signature="e#46300#46301#0" expanded="false" />
-                <element signature="e#46758#46759#0" expanded="false" />
-                <element signature="e#46811#46812#0" expanded="false" />
-                <element signature="e#47120#47121#0" expanded="false" />
-                <element signature="e#47173#47174#0" expanded="false" />
-                <element signature="e#48180#48181#0" expanded="false" />
-                <element signature="e#48231#48232#0" expanded="false" />
-                <element signature="e#56754#56755#0" expanded="false" />
-                <element signature="e#56791#56792#0" expanded="false" />
-                <element signature="e#56881#56882#0" expanded="false" />
-                <element signature="e#56922#56923#0" expanded="false" />
-                <element signature="e#56960#56961#0" expanded="false" />
-                <element signature="e#56984#56985#0" expanded="false" />
-                <element signature="e#61736#61737#0" expanded="false" />
-                <element signature="e#61810#61811#0" expanded="false" />
-                <element signature="e#66267#66268#0" expanded="false" />
-                <element signature="e#66284#66285#0" expanded="false" />
-                <element signature="e#69195#69196#0" expanded="false" />
-                <element signature="e#69225#69226#0" expanded="false" />
-              </folding>
+              <caret line="1017" column="18" selection-start-line="1017" selection-start-column="18" selection-end-line="1017" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -639,7 +591,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="3" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
@@ -688,7 +642,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#39486#0" expanded="true" />
+            <element signature="e#0#39585#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -749,7 +703,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#39486#0" expanded="true" />
+            <element signature="e#0#39585#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -803,7 +757,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#39486#0" expanded="true" />
+            <element signature="e#0#39585#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
@@ -908,13 +862,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/pipe/Pipe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.4161932">
-          <caret line="179" column="5" selection-start-line="179" selection-start-column="5" selection-end-line="179" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/TransducerTrainer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.49509117">
@@ -940,59 +887,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.11640954">
           <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/CRF.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="257" column="22" selection-start-line="257" selection-start-column="22" selection-end-line="257" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#76580#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#10572#10573#0" expanded="false" />
-            <element signature="e#10613#10614#0" expanded="false" />
-            <element signature="e#16204#16205#0" expanded="false" />
-            <element signature="e#16250#16251#0" expanded="false" />
-            <element signature="e#16323#16324#0" expanded="false" />
-            <element signature="e#16371#16372#0" expanded="false" />
-            <element signature="e#17868#17869#0" expanded="false" />
-            <element signature="e#17917#17918#0" expanded="false" />
-            <element signature="e#24910#24911#0" expanded="false" />
-            <element signature="e#24942#24943#0" expanded="false" />
-            <element signature="e#28243#28244#0" expanded="false" />
-            <element signature="e#28275#28276#0" expanded="false" />
-            <element signature="e#28963#28964#0" expanded="false" />
-            <element signature="e#29015#29016#0" expanded="false" />
-            <element signature="e#45297#45298#0" expanded="false" />
-            <element signature="e#45331#45332#0" expanded="false" />
-            <element signature="e#45987#45988#0" expanded="false" />
-            <element signature="e#46049#46050#0" expanded="false" />
-            <element signature="e#46103#46104#0" expanded="false" />
-            <element signature="e#46148#46149#0" expanded="false" />
-            <element signature="e#46189#46190#0" expanded="false" />
-            <element signature="e#46228#46229#0" expanded="false" />
-            <element signature="e#46268#46269#0" expanded="false" />
-            <element signature="e#46300#46301#0" expanded="false" />
-            <element signature="e#46758#46759#0" expanded="false" />
-            <element signature="e#46811#46812#0" expanded="false" />
-            <element signature="e#47120#47121#0" expanded="false" />
-            <element signature="e#47173#47174#0" expanded="false" />
-            <element signature="e#48180#48181#0" expanded="false" />
-            <element signature="e#48231#48232#0" expanded="false" />
-            <element signature="e#56754#56755#0" expanded="false" />
-            <element signature="e#56791#56792#0" expanded="false" />
-            <element signature="e#56881#56882#0" expanded="false" />
-            <element signature="e#56922#56923#0" expanded="false" />
-            <element signature="e#56960#56961#0" expanded="false" />
-            <element signature="e#56984#56985#0" expanded="false" />
-            <element signature="e#61736#61737#0" expanded="false" />
-            <element signature="e#61810#61811#0" expanded="false" />
-            <element signature="e#66267#66268#0" expanded="false" />
-            <element signature="e#66284#66285#0" expanded="false" />
-            <element signature="e#69195#69196#0" expanded="false" />
-            <element signature="e#69225#69226#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1043,16 +937,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/examples/TestCRFPipe.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/CRFTrainerByThreadedLabelLikelihood.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.0308555">
@@ -1069,6 +953,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/CRFTrainerByLabelLikelihood.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="204" column="19" selection-start-line="204" selection-start-column="19" selection-end-line="204" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/CRF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1017" column="18" selection-start-line="1017" selection-start-column="18" selection-end-line="1017" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/examples/TestCRFPipe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="31" selection-start-line="38" selection-start-column="31" selection-end-line="38" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/pipe/Pipe.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
+          <folding>
+            <element signature="e#7566#7567#0" expanded="true" />
+            <element signature="e#7615#7616#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/examples/TrainCRF.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1077,20 +998,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/cc/mallet/mallet/2.0.7/mallet-2.0.7-sources.jar!/cc/mallet/fst/CRFTrainerByLabelLikelihood.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="277" column="43" selection-start-line="277" selection-start-column="43" selection-end-line="277" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/klab/CRFDriver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.1938777">
-          <caret line="608" column="67" selection-start-line="608" selection-start-column="67" selection-end-line="608" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.49708456">
+          <caret line="828" column="25" selection-start-line="828" selection-start-column="25" selection-end-line="828" selection-end-column="25" />
           <folding>
-            <element signature="e#0#39486#0" expanded="true" />
+            <element signature="e#0#39585#0" expanded="true" />
             <element signature="imports" expanded="true" />
           </folding>
         </state>
