@@ -550,6 +550,7 @@ public class CRFDriver
             p = crf.getInputPipe();
         }
         else {
+            /*
             ArrayList<Pipe> trainPipes = new ArrayList<Pipe>();
             ArrayList<Pipe> testPipes = new ArrayList<Pipe>();
             //TODO: Go through featureString and parse arguments, adding pipes as needed
@@ -603,6 +604,10 @@ public class CRFDriver
             test_p = new SerialPipes(testPipes);
             //test_p = new SimpleTaggerSentence2FeatureVectorSequence();
             test_p.getTargetAlphabet().lookupIndex(defaultOption.value);
+            */
+            p = new SimpleTaggerSentence2FeatureVectorSequence();
+            p.getTargetAlphabet().lookupIndex(defaultOption.value);
+            test_p = p;
 
         }
 
