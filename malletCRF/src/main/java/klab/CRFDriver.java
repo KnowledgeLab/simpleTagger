@@ -22,6 +22,8 @@ import java.util.regex.Pattern;
 
 import cc.mallet.fst.*;
 import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.SimpleTaggerSentence2TokenSequence;
+import cc.mallet.pipe.TokenSequence2FeatureVectorSequence;
 import cc.mallet.pipe.tsf.OffsetConjunctions;
 import cc.mallet.pipe.tsf.TokenTextCharSuffix;
 import cc.mallet.types.Alphabet;
@@ -252,8 +254,8 @@ public class CRFDriver
             SimpleTagger.class, "threads", "INTEGER", true, 1,
             "Number of threads to use for CRF training.", null);
 
-    private static final CommandOption.String featureString = new CommandOption.String(
-            SimpleTagger.class, "feature-string", "STRING", true, "156",
+    private static final CommandOption.Integer featureString = new CommandOption.Integer(
+            SimpleTagger.class, "feature-string", "INTEGER", true, 156,
             "Specifies which features to look for in the input data", null);
 
 
@@ -550,45 +552,55 @@ public class CRFDriver
             p = crf.getInputPipe();
         }
         else {
-            /*
+
             ArrayList<Pipe> trainPipes = new ArrayList<Pipe>();
             ArrayList<Pipe> testPipes = new ArrayList<Pipe>();
             //TODO: Go through featureString and parse arguments, adding pipes as needed
 
-            String strFeatureSet = featureString.value;
-            for (int i = 0; i < featureString.value.length(); i++ )
+            //trainPipes.add(new SimpleTaggerSentence2FeatureVectorSequence());
+            //testPipes.add(new SimpleTaggerSentence2FeatureVectorSequence());
+
+
+            trainPipes.add(new SimpleTaggerSentence2TokenSequence());
+            testPipes.add(new SimpleTaggerSentence2TokenSequence());
+
+            String strFeatureSet = String.valueOf(featureString.value);
+            for (int i = 0; i < strFeatureSet.length(); i++ )
             {
                 if (strFeatureSet.charAt(i) == '5')
                 {
-                    trainPipes.add(new TokenTextCharSuffix("POS=", 2));
-                    testPipes.add(new TokenTextCharSuffix("POS=", 2));
+                    trainPipes.add(new NewTokenTextCharSuffix("POS=", 3));
+                    testPipes.add(new NewTokenTextCharSuffix("POS=", 3));
                 }
 
-                if (strFeatureSet.charAt(i) == '6')
-                {
-                    int[] conj = {-1, 0, 1};
-                    trainPipes.add(new OffsetConjunctions(new int[][]{conj}));
-                    testPipes.add(new OffsetConjunctions(new int[][]{conj}));
-                }
+                //if (strFeatureSet.charAt(i) == '6')
+                //{
+                //    int[] conj = {-1, 0, 1};
+                //    trainPipes.add(new OffsetConjunctions(new int[][]{conj}));
+                //    testPipes.add(new OffsetConjunctions(new int[][]{conj}));
+                //}
 
                 if (strFeatureSet.charAt(i) == '7')
                 {
-                    trainPipes.add(new TokenTextCharSuffix("NUM=", 2));
-                    testPipes.add(new TokenTextCharSuffix("NUM=", 2));
+                    trainPipes.add(new NewTokenTextCharSuffix("NUM=", 2));
+                    testPipes.add(new NewTokenTextCharSuffix("NUM=", 2));
                 }
 
                 if (strFeatureSet.charAt(i) == '8')
                 {
-                    trainPipes.add(new TokenTextCharSuffix("VERB_PRE=", 2) );
-                    testPipes.add(new TokenTextCharSuffix("VERB_PRE=", 2) );
-                    trainPipes.add(new TokenTextCharSuffix("VERB_PAS=", 2));
-                    testPipes.add(new TokenTextCharSuffix("VERB_PAS=", 2));
+                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 2) );
+                    testPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 2) );
+                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 2));
+                    testPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 2));
                 }
 
             }
 
-            trainPipes.add(new SimpleTaggerSentence2FeatureVectorSequence());
-            testPipes.add(new SimpleTaggerSentence2FeatureVectorSequence());
+            trainPipes.add(new TokenSequence2FeatureVectorSequence());
+            testPipes.add(new TokenSequence2FeatureVectorSequence());
+
+
+
             //new OffsetConjunctions({{-1,0,1}});
             //new TokenTextCharSuffix("POS=", 2);
             //new TokenTextCharSuffix("NUM=", 2);
@@ -602,12 +614,12 @@ public class CRFDriver
 
 
             test_p = new SerialPipes(testPipes);
-            //test_p = new SimpleTaggerSentence2FeatureVectorSequence();
+            test_p = new SimpleTaggerSentence2FeatureVectorSequence();
             test_p.getTargetAlphabet().lookupIndex(defaultOption.value);
-            */
-            p = new SimpleTaggerSentence2FeatureVectorSequence();
-            p.getTargetAlphabet().lookupIndex(defaultOption.value);
-            test_p = p;
+
+            //p = new SimpleTaggerSentence2FeatureVectorSequence();
+            //p.getTargetAlphabet().lookupIndex(defaultOption.value);
+            //test_p = p;
 
         }
 
@@ -738,7 +750,7 @@ public class CRFDriver
         }
         if (trainOption.value)
         {
-            for (int i = 1; i < trainingData.size(); i+=500) {
+            for (int i = 500; i < trainingData.size(); i+=500) {
                 crf = null;
                 InstanceList trainingDataCp = trainingData.subList(0, i);
                 eval[0] = new TokenAccuracyEvaluator(new InstanceList[] {trainingDataCp, validateData}, new String[] {"Training", "Validation"});
