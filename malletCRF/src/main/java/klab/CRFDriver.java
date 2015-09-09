@@ -569,8 +569,8 @@ public class CRFDriver
             {
                 if (strFeatureSet.charAt(i) == '5')
                 {
-                    trainPipes.add(new NewTokenTextCharSuffix("POS=", 3));
-                    testPipes.add(new NewTokenTextCharSuffix("POS=", 3));
+                    trainPipes.add(new NewTokenTextCharSuffix("POS=", 5));
+                    testPipes.add(new NewTokenTextCharSuffix("POS=", 5));
                 }
 
                 //if (strFeatureSet.charAt(i) == '6')
@@ -788,6 +788,7 @@ public class CRFDriver
                             if (includeInput) {
                                 FeatureVector fv = (FeatureVector)input.get(j);
                                 buf.append(fv.toString(true));
+                                //(FeatureVector)((FeatureVector) input.get(j)).value()
                             }
                             System.out.println(buf.toString());
                         }

@@ -121,6 +121,7 @@ public class NewSimpleTaggerSentence2TokenSequence extends Pipe{
             if (setTokensAsFeatures){
                 for (int f = 0; f < nFeatures; f++)
                     tok.setFeatureValue(tokens[l][f], 1.0);
+
             } else {
                 ;
                 //for (int f = 1; f < nFeatures; f++)
