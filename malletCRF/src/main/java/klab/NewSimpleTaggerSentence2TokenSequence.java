@@ -119,13 +119,15 @@ public class NewSimpleTaggerSentence2TokenSequence extends Pipe{
             } else nFeatures = tokens[l].length;
             Token tok = new Token(makeText(tokens[l]));
             if (setTokensAsFeatures){
-                for (int f = 0; f < nFeatures; f++)
-                    tok.setFeatureValue(tokens[l][f], 1.0);
+                for (int f = 0; f < nFeatures; f++) {
+                    if (!tokens[l][f].matches("[A-Z_]+=.*"))
+                        tok.setFeatureValue(tokens[l][f], 1.0);
+                }
 
             } else {
-                ;
-                //for (int f = 1; f < nFeatures; f++)
-                    //tok.setFeatureValue(tokens[l][f], 1.0);
+
+                for (int f = 1; f < nFeatures; f++)
+                    tok.setFeatureValue(tokens[l][f], 1.0);
             }
             ts.add (tok);
         }

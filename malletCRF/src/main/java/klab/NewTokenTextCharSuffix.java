@@ -31,6 +31,8 @@ import java.io.*;
 import cc.mallet.pipe.*;
 import cc.mallet.types.*;
 
+import static java.lang.System.exit;
+
 public class NewTokenTextCharSuffix extends Pipe implements Serializable
 {
     String prefix;
@@ -50,16 +52,34 @@ public class NewTokenTextCharSuffix extends Pipe implements Serializable
     public Instance pipe (Instance carrier)
     {
         TokenSequence ts = (TokenSequence) carrier.getData();
+        //System.out.println(ts.toStringShort());
         for (int i = 0; i < ts.size(); i++) {
             Token t = ts.get(i);
             String s = t.getText();
             int slen = s.length();
-            if (slen > suffixLength) {
+            if (s.startsWith(prefix)) {
+                int min_len = (prefix.length() + suffixLength >= slen - prefix.length()) ? slen : prefix.length() + suffixLength;
+                t.setFeatureValue((prefix + "!"), Double.valueOf(s.substring(prefix.length(), min_len)));
+                //System.out.println(s + String.valueOf(s.startsWith(prefix)) +  Double.valueOf(s.substring(prefix.length(),  min_len )));
+                //t.setFeatureValue(s, 0.0);
+                //t.setNumericProperty(s, 0.0);
+
+
+
+            }
+            //System.out.println(getDataAlphabet().toString());
+            //System.out.println(ts.get(0));
+            /*
+            if (slen > (suffixLength + prefix.length())) {
                 //t.setFeatureValue ((prefix + s.substring (slen - suffixLength, slen)), 1.0);
                 t.setFeatureValue((prefix + "!"), Double.valueOf(s.substring(prefix.length(), prefix.length() + suffixLength)));
                 t.setFeatureValue(s, 0.0);
             }
+
+           */
         }
+        //System.out.println(ts.toStringShort());
+        //exit(-1);
         return carrier;
     }
 
