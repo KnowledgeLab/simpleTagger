@@ -561,8 +561,8 @@ public class CRFDriver
             //testPipes.add(new SimpleTaggerSentence2FeatureVectorSequence());
 
 
-            trainPipes.add(new SimpleTaggerSentence2TokenSequence());
-            testPipes.add(new SimpleTaggerSentence2TokenSequence());
+            trainPipes.add(new NewSimpleTaggerSentence2TokenSequence());
+            testPipes.add(new NewSimpleTaggerSentence2TokenSequence());
 
             String strFeatureSet = String.valueOf(featureString.value);
             for (int i = 0; i < strFeatureSet.length(); i++ )
