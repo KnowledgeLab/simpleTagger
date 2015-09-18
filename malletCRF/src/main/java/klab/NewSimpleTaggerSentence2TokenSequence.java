@@ -120,8 +120,12 @@ public class NewSimpleTaggerSentence2TokenSequence extends Pipe{
             Token tok = new Token(makeText(tokens[l]));
             if (setTokensAsFeatures){
                 for (int f = 0; f < nFeatures; f++) {
+                    // We make the assumption that we ignore tokens of the form 'ABC=', as they suggest that we want to use them for continuous features
                     if (!tokens[l][f].matches("[A-Z_]+=.*"))
                         tok.setFeatureValue(tokens[l][f], 1.0);
+                    else
+                        //System.out.println(tok.getText() + "--" + tokens[l][f]);
+                        tok.setProperty(tokens[l][f], tokens[l][f]);
                 }
 
             } else {

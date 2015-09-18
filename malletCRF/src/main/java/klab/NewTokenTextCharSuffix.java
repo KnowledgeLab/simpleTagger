@@ -30,6 +30,7 @@ import java.io.*;
 
 import cc.mallet.pipe.*;
 import cc.mallet.types.*;
+import cc.mallet.util.PropertyList;
 
 import static java.lang.System.exit;
 
@@ -56,8 +57,10 @@ public class NewTokenTextCharSuffix extends Pipe implements Serializable
         for (int i = 0; i < ts.size(); i++) {
             Token t = ts.get(i);
             String s = t.getText();
+
             int slen = s.length();
             if (s.startsWith(prefix)) {
+
                 int min_len = (prefix.length() + suffixLength >= slen - prefix.length()) ? slen : prefix.length() + suffixLength;
                 t.setFeatureValue((prefix + "!"), Double.valueOf(s.substring(prefix.length(), min_len)));
                 //System.out.println(s + String.valueOf(s.startsWith(prefix)) +  Double.valueOf(s.substring(prefix.length(),  min_len )));
@@ -67,6 +70,22 @@ public class NewTokenTextCharSuffix extends Pipe implements Serializable
 
 
             }
+            PropertyList properties = t.getProperties();
+            if (properties != null) {
+                PropertyList.Iterator iter = properties.iterator();
+                while (iter.hasNext()) {
+                    s = iter.getKey();
+                    slen = s.length();
+                    //System.out.println(s + " -- " + prefix);
+
+                    if (s.startsWith(prefix)) {
+                        int min_len = (prefix.length() + suffixLength >= slen - prefix.length()) ? slen : prefix.length() + suffixLength;
+                        t.setFeatureValue((prefix + "!"), Double.valueOf(s.substring(prefix.length(), min_len)));
+                    }
+                    iter.next();
+                }
+            }
+
             //System.out.println(getDataAlphabet().toString());
             //System.out.println(ts.get(0));
             /*

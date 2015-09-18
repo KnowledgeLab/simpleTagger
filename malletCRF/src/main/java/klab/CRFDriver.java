@@ -564,6 +564,7 @@ public class CRFDriver
             trainPipes.add(new NewSimpleTaggerSentence2TokenSequence());
             testPipes.add(new NewSimpleTaggerSentence2TokenSequence());
 
+
             String strFeatureSet = String.valueOf(featureString.value);
             for (int i = 0; i < strFeatureSet.length(); i++ )
             {
@@ -582,16 +583,16 @@ public class CRFDriver
 
                 if (strFeatureSet.charAt(i) == '7')
                 {
-                    trainPipes.add(new NewTokenTextCharSuffix("NUM=", 2));
-                    testPipes.add(new NewTokenTextCharSuffix("NUM=", 2));
+                    trainPipes.add(new NewTokenTextCharSuffix("NUM=", 1));
+                    testPipes.add(new NewTokenTextCharSuffix("NUM=", 1));
                 }
 
                 if (strFeatureSet.charAt(i) == '8')
                 {
-                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 2) );
-                    testPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 2) );
-                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 2));
-                    testPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 2));
+                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 1) );
+                    testPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 1) );
+                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 1));
+                    testPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 1));
                 }
 
             }
