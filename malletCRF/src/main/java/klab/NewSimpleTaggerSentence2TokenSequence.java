@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 
 /**
- * Created by Bartley on 9/8/15.
+ * Created by NBartley on 9/8/15.
  */
 public class NewSimpleTaggerSentence2TokenSequence extends Pipe{
 
@@ -30,13 +30,15 @@ public class NewSimpleTaggerSentence2TokenSequence extends Pipe{
  * this row. All other tokens in the row, or all tokens in the row if
  * not target processing, are the names of features that are on for
  * the sequence element described by the row.
+ *
+ * Additional support has been added for continuous features, but these features need to be given a prefix (regex '[A-Z]+=').
  */
 
     protected boolean setTokensAsFeatures;
 
     /**
      * Creates a new
-     * <code>SimpleTaggerSentence2TokenSequence</code> instance.
+     * <code>NewSimpleTaggerSentence2TokenSequence</code> instance.
      * By default we include tokens as features.
      */
     public NewSimpleTaggerSentence2TokenSequence ()
@@ -46,7 +48,7 @@ public class NewSimpleTaggerSentence2TokenSequence extends Pipe{
     }
 
     /**
-     * creates a new <code>SimpleTaggerSentence2TokenSequence</code> instance
+     * creates a new <code>NewSimpleTaggerSentence2TokenSequence</code> instance
      * which includes tokens as features iff the supplied argument is true.
      */
     public NewSimpleTaggerSentence2TokenSequence (boolean inc)
@@ -82,13 +84,17 @@ public class NewSimpleTaggerSentence2TokenSequence extends Pipe{
      * Takes an instance with data of type String or String[][] and creates
      * an Instance of type TokenSequence.  Each Token in the sequence is
      * gets the test of the line preceding it and once feature of value 1
-     * for each "Feature" in the line.  For example, if the String[][] is
+     * for each "Feature" in the line.  If the feature has an appropriate prefix,
+     * a property is set for containing that continuous feature encoded, which will be processed later
+     * in a NewTokenTextCharSuffix pipe. For example, if the String[][] is
      * {{a,b},{c,d,e}} (and target processing is off) then the text would be
      * "a b" for the first token and "c d e" for the second.  Also, the
      * features "a" and "b" would be set for the first token and "c", "d" and
      * "e"  for the second.  The last element in the String[] for the current
      * token is taken as the target (label), so in the previous example "b"
-     * would have been the label of the first sequence.
+     * would have been the label of the first sequence. To use continuous features, have
+     * a token in the line match the following regex: [A-Z]+=
+     * e.g., DOG PREF=0.10123 CAT HEIGHT=0.1143
      */
     public Instance pipe (Instance carrier)
     {

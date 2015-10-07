@@ -7,7 +7,7 @@ import cc.mallet.util.Maths;
 import java.io.PrintWriter;
 
 /**
- * Created by Bartley on 9/9/15.
+ * Created by NBartley on 9/9/15.
  */
     /* Copyright (C) 2003 Univ. of Massachusetts Amherst, Computer Science Dept.
    This file is part of "MALLET" (MAchine Learning for LanguagE Toolkit).

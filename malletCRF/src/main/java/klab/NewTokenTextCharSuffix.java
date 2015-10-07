@@ -11,9 +11,10 @@ package klab;
 
 
 /**
- Add the token text as a feature with value 1.0.
+ Catch a specified prefix and set the value to a double. Read the properties of the feature and add as doubles.
 
- @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>
+ @author (original) Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>
+ @author Nathan Bartley <a href="mailto:bartleyn@uchicago.edu">bartleyn@uchicago.edu</a>
  */
 
 import cc.mallet.pipe.Pipe;
@@ -53,7 +54,6 @@ public class NewTokenTextCharSuffix extends Pipe implements Serializable
     public Instance pipe (Instance carrier)
     {
         TokenSequence ts = (TokenSequence) carrier.getData();
-        //System.out.println(ts.toStringShort());
         for (int i = 0; i < ts.size(); i++) {
             Token t = ts.get(i);
             String s = t.getText();
@@ -63,11 +63,7 @@ public class NewTokenTextCharSuffix extends Pipe implements Serializable
 
                 int min_len = (prefix.length() + suffixLength >= slen - prefix.length()) ? slen : prefix.length() + suffixLength;
                 t.setFeatureValue((prefix + "!"), Double.valueOf(s.substring(prefix.length(), min_len)));
-                //System.out.println(s + String.valueOf(s.startsWith(prefix)) +  Double.valueOf(s.substring(prefix.length(),  min_len )));
-                //t.setFeatureValue(s, 0.0);
-                //t.setNumericProperty(s, 0.0);
-
-
+                
 
             }
             PropertyList properties = t.getProperties();
@@ -86,16 +82,7 @@ public class NewTokenTextCharSuffix extends Pipe implements Serializable
                 }
             }
 
-            //System.out.println(getDataAlphabet().toString());
-            //System.out.println(ts.get(0));
-            /*
-            if (slen > (suffixLength + prefix.length())) {
-                //t.setFeatureValue ((prefix + s.substring (slen - suffixLength, slen)), 1.0);
-                t.setFeatureValue((prefix + "!"), Double.valueOf(s.substring(prefix.length(), prefix.length() + suffixLength)));
-                t.setFeatureValue(s, 0.0);
-            }
 
-           */
         }
         //System.out.println(ts.toStringShort());
         //exit(-1);

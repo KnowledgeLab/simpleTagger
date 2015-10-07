@@ -43,8 +43,8 @@ import cc.mallet.util.CommandOption;
 import cc.mallet.util.MalletLogger;
 
 /**
- * This class's main method trains, tests, or runs a generic CRF-based
- * sequence tagger.
+ * This class's main method trains, tests, or runs a tweaked simple linear CRF
+ *
  * <p>
  * Training and test files consist of blocks of lines, one block for each instance, 
  * separated by blank lines. Each block of lines should have the first form 
@@ -52,7 +52,8 @@ import cc.mallet.util.MalletLogger;
  * A variety of command line options control the operation of the main program, as
  * described in the comments for {@link #main main}.
  *
- * @author Fernando Pereira <a href="mailto:pereira@cis.upenn.edu">pereira@cis.upenn.edu</a>
+ * @author Nathan Bartley <a href="mailto:bartleyn@uchicago.edu">bartleyn@uchicago.edu</a>
+ * @author (original) Fernando Pereira <a href="mailto:pereira@cis.upenn.edu">pereira@cis.upenn.edu</a>
  * @version 1.0
  */
 public class CRFDriver
@@ -583,16 +584,16 @@ public class CRFDriver
 
                 if (strFeatureSet.charAt(i) == '7')
                 {
-                    trainPipes.add(new NewTokenTextCharSuffix("NUM=", 1));
-                    testPipes.add(new NewTokenTextCharSuffix("NUM=", 1));
+                    trainPipes.add(new NewTokenTextCharSuffix("NUM=", 3));
+                    testPipes.add(new NewTokenTextCharSuffix("NUM=", 3));
                 }
 
                 if (strFeatureSet.charAt(i) == '8')
                 {
-                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 1) );
-                    testPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 1) );
-                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 1));
-                    testPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 1));
+                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 3) );
+                    testPipes.add(new NewTokenTextCharSuffix("VERB_PRE=", 3) );
+                    trainPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 3));
+                    testPipes.add(new NewTokenTextCharSuffix("VERB_PAS=", 3));
                 }
 
             }
